@@ -37,13 +37,13 @@ app.post('/webhook', (req,res) => {
 
     switch (type) {
         case 'message' :
-            let type = meessage.type;
+            let type = message.type;
             console.log(`[message type] : ${type}`);
 
-            let id = meessage.id;
+            let id = message.id;
             
             if (type == 'text') {
-                let text = meessage.text;
+                let text = message.text;
 
                 const message = [
                     {
