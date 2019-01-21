@@ -8,6 +8,14 @@ const client = new line.Client({
     channelAccessToken: '4bpYw3g3xJCxM1aURCIilx/NGBcInRFHjUhFXZy3Jl4KvnRrpZkUoJgwc4kAjuyCrcWhFHyKdHbMAbWHh4OYKU1C5l5ty00VxKtEzwpIp1/16i1RDwXD5WFdvd5wKWEV7JASy9HScLtLbqRTGob2NwdB04t89/1O/w1cDnyilFU='
 });
 
+const mysql = require('mysql');
+const conn = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password : '',
+    database : 'chatbot'
+})
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -45,19 +53,33 @@ app.post('/webhook', (req,res) => {
             if (type == 'text') {
                 let text = message.text;
 
-                const messageResponse = [
-                    {
-                        type: 'text',
-                        text: 'แบร่ แบร่'
-                    },
-                    {
-                        type: "sticker",
-                        packageId: "11537",
-                        stickerId: "52002758"
-                    }
-                ];
+                console.log(`received text`);
 
-                  replyMessage(replyToken, messageResponse);
+                conn.connect((err) => {
+                    if (err) throw err;
+                })
+
+                let sql = conn.query(`select * from reply where rec_msg = ${text}`,(err, result) => {
+                    if (err) throw err;
+                    console.log(`result ==>`);
+                    console.log(result);
+                });
+
+                // const messageResponse = [
+                //     {
+                //         type: 'text',
+                //         text: 'แบร่ แบร่'
+                //     },
+                //     {
+                //         type: "sticker",
+                //         packageId: "11537",
+                //         stickerId: "52002758"
+                //     }
+                // ];
+
+
+
+                replyMessage(replyToken, messageResponse);
                 
             } else if (type == 'sticker') {
                 let stickerID = message.stickerId;
