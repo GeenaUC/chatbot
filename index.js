@@ -60,7 +60,10 @@ app.post('/webhook', (req,res) => {
                 // })
 
                 let sql = conn.query(`select * from reply where rec_msg = ${text}`,(err, result) => {
-                    if (err) throw err;
+                    if (err) {
+                        console.log('error : ');
+                        console.log(err);
+                    };
                     console.log(`result ==>`);
                     console.log(result);
                 });
