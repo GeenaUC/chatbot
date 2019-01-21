@@ -90,13 +90,16 @@ app.post('/webhook', (req,res) => {
                                         //console.log('---------------------Data---------------------');
                                         console.log(result);
                                         results = result[0].age;
-                                        console.log(results);
                                         console.log('----------------------------------------------');
                                     })
                                 });
 
-                                types = "text";
-                                texts = results;
+                                const messageResponse = [{
+                                        type : "text",
+                                        texts : results
+                                    }];
+
+                                replyMessage(replyToken, messageResponse);
 
                                 break;
                             default:
@@ -108,19 +111,19 @@ app.post('/webhook', (req,res) => {
                         break;
                 }
 
-                const messageResponse = [
-                    {
-                        type: types,
-                        text: texts
-                    }
-                    // {
-                    //     type: "sticker",
-                    //     packageId: "11537",
-                    //     stickerId: "52002758"
-                    // }
-                ];
+                // const messageResponse = [
+                //     {
+                //         type: types,
+                //         text: texts
+                //     }
+                //     // {
+                //     //     type: "sticker",
+                //     //     packageId: "11537",
+                //     //     stickerId: "52002758"
+                //     // }
+                // ];
 
-                replyMessage(replyToken, messageResponse);
+                //replyMessage(replyToken, messageResponse);
                 
             } else if (type == 'sticker') {
                 let stickerID = message.stickerId;
