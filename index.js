@@ -83,8 +83,9 @@ app.post('/webhook', (req,res) => {
                             const collection = db.collection('users');
                             collection.find({name : 'Gna'}).toArray((err, result) => {
                                 if (err) throw err;
-                                console.log(result[0].age);
+                                console.log(resulte);
                                 results = result[0].age;
+                                console.log(results);
                             })
                         });
 
