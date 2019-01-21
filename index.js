@@ -93,10 +93,6 @@ app.post('/webhook', (req,res) => {
                                 types = "text";
                                 texts = results[0].age;
                                 break;
-                            case 'fb' :
-                                types = "text";
-                                texts = results[0].facebook;
-                                break;
                             default:
                                 break;
                         }
@@ -108,7 +104,7 @@ app.post('/webhook', (req,res) => {
 
                 const messageResponse = [
                     {
-                        type: texts,
+                        type: types,
                         text: texts
                     }
                     // {
