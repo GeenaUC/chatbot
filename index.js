@@ -56,29 +56,10 @@ app.post('/webhook', (req,res) => {
     // //console.log(replyToken);
     // console.log('----------------------');
 
-    MongoClient.connect(dbUrl, (err, client) => {
-        assert.equal(null, err);
-        var db = client.db(dbName);
-        const collection = db.collection('users');
-        collection.find({}).toArray((err, result) => {
-            if (err) throw err;
-            console.log('---------------------Data---------------------');
-            console.log(result);
-            console.log('----------------------------------------------');
-        })
-    });
-
     switch (type) {
         case 'message' :
             let type = message.type;
             //let id = message.id;
-
-            collection.find({}).toArray((err, result) => {
-                if (err) throw err;
-                console.log('--------------------Data 2--------------------');
-                console.log(result);
-                console.log('----------------------------------------------');
-            })
             
             if (type == 'text') {
                 let text = message.text;
@@ -97,9 +78,26 @@ app.post('/webhook', (req,res) => {
                     case 'Gna' :
                         switch (action) {
                             case 'age' :
-                                
+
+                                let results;
+
+                                MongoClient.connect(dbUrl, (err, client) => {
+                                    assert.equal(null, err);
+                                    var db = client.db(dbName);
+                                    const collection = db.collection('users');
+                                    collection.find({ name : 'Gna' }).toArray((err, result) => {
+                                        if (err) throw err;
+                                        //console.log('---------------------Data---------------------');
+                                        console.log(result);
+                                        results = result[0];
+                                        console.log(results);
+                                        console.log('----------------------------------------------');
+                                    })
+                                });
+
                                 types = "text";
                                 texts = results;
+
                                 break;
                             default:
                                 break;
