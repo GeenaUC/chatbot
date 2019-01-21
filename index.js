@@ -69,68 +69,68 @@ app.post('/webhook', (req,res) => {
         console.log(result);
     });
 
-    switch (type) {
-        case 'message' :
-            let type = message.type;
-            //console.log(`[message type] => ${type}`);
+    // switch (type) {
+    //     case 'message' :
+    //         let type = message.type;
+    //         //console.log(`[message type] => ${type}`);
 
-            let id = message.id;
+    //         let id = message.id;
             
-            if (type == 'text') {
-                let text = message.text;
+    //         if (type == 'text') {
+    //             let text = message.text;
 
-                console.log(`received text : ${text}`);
+    //             console.log(`received text : ${text}`);
 
-                // conn.connect((err) => {
-                //     if (err) {
-                //         console.log(err);
-                //     } else {
-                //         console.log('connect database success!');
-                //     }
-                // })
+    //             // conn.connect((err) => {
+    //             //     if (err) {
+    //             //         console.log(err);
+    //             //     } else {
+    //             //         console.log('connect database success!');
+    //             //     }
+    //             // })
 
-                // let query = conn.query(`select * from reply`,(err, result) => {
-                //     if (err) {
-                //         console.log('error : ');
-                //         console.log(err);
-                //     };
-                //     console.log(`result ==>`);
-                //     console.log(result);
-                // });
+    //             // let query = conn.query(`select * from reply`,(err, result) => {
+    //             //     if (err) {
+    //             //         console.log('error : ');
+    //             //         console.log(err);
+    //             //     };
+    //             //     console.log(`result ==>`);
+    //             //     console.log(result);
+    //             // });
 
-                //console.log(query.sql);
+    //             //console.log(query.sql);
 
-                // const messageResponse = [
-                //     {
-                //         type: 'text',
-                //         text: 'แบร่ แบร่'
-                //     },
-                //     {
-                //         type: "sticker",
-                //         packageId: "11537",
-                //         stickerId: "52002758"
-                //     }
-                // ];
+    //             // const messageResponse = [
+    //             //     {
+    //             //         type: 'text',
+    //             //         text: 'แบร่ แบร่'
+    //             //     },
+    //             //     {
+    //             //         type: "sticker",
+    //             //         packageId: "11537",
+    //             //         stickerId: "52002758"
+    //             //     }
+    //             // ];
 
-                //replyMessage(replyToken, messageResponse);
+    //             //replyMessage(replyToken, messageResponse);
                 
-            } else if (type == 'sticker') {
-                let stickerID = message.stickerId;
-                let packageID = message.packageId;
-            }
+    //         } else if (type == 'sticker') {
+    //             let stickerID = message.stickerId;
+    //             let packageID = message.packageId;
+    //         }
 
-            break;
-        case 'follow' :
-            break;
-        case '่join' :
-            break;
-        case 'follow' :
-            break;
-        case 'unfollow' :
-            break;
-        default:
-            break;
-    }
+    //         break;
+    //     case 'follow' :
+    //         break;
+    //     case '่join' :
+    //         break;
+    //     case 'follow' :
+    //         break;
+    //     case 'unfollow' :
+    //         break;
+    //     default:
+    //         break;
+    // }
 
     let respone = {
         status: 'ok',
