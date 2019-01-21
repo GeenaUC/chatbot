@@ -32,7 +32,7 @@ app.get('/', (req,res) => {
 })
 
 app.post('/webhook', (req,res) => {
-    console.log('---- /webhook ----');
+    console.log('------ /webhook ------');
     let body = req.body;
     let events = body.events[0];
     let source = events.source;
@@ -50,6 +50,24 @@ app.post('/webhook', (req,res) => {
     //console.log(type);
     console.log(`replyToken ==> ${replyToken}`);
     //console.log(replyToken);
+    console.log('----------------------');
+
+    conn.connect((err) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('connect database success!');
+        }
+    })
+
+    let query = conn.query(`select * from reply`,(err, result) => {
+        if (err) {
+            console.log('error : ');
+            console.log(err);
+        };
+        console.log(`result ==>`);
+        console.log(result);
+    });
 
     switch (type) {
         case 'message' :
@@ -63,22 +81,22 @@ app.post('/webhook', (req,res) => {
 
                 console.log(`received text : ${text}`);
 
-                conn.connect((err) => {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log('connect database success!');
-                    }
-                })
+                // conn.connect((err) => {
+                //     if (err) {
+                //         console.log(err);
+                //     } else {
+                //         console.log('connect database success!');
+                //     }
+                // })
 
-                let query = conn.query(`select * from reply`,(err, result) => {
-                    if (err) {
-                        console.log('error : ');
-                        console.log(err);
-                    };
-                    console.log(`result ==>`);
-                    console.log(result);
-                });
+                // let query = conn.query(`select * from reply`,(err, result) => {
+                //     if (err) {
+                //         console.log('error : ');
+                //         console.log(err);
+                //     };
+                //     console.log(`result ==>`);
+                //     console.log(result);
+                // });
 
                 //console.log(query.sql);
 
