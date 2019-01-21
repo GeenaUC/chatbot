@@ -16,13 +16,13 @@ const conn = mysql.createConnection({
     database : 'chatbot'
 })
 
-conn.connect((err) => {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log('connect database success!');
-    }
-})
+// conn.connect((err) => {
+//     if (err) {
+//         console.log(err);
+//     } else {
+//         console.log('connect database success!');
+//     }
+// })
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -46,15 +46,15 @@ app.post('/webhook', (req,res) => {
     console.log(source);
     console.log(`Message ==>`);
     console.log(message);
-    console.log(`type ==>`);
-    console.log(type);
-    console.log(`replyToken ==>`);
-    console.log(replyToken);
+    console.log(`type ==> ${type}`);
+    //console.log(type);
+    console.log(`replyToken ==> ${replyToken}`);
+    //console.log(replyToken);
 
     switch (type) {
         case 'message' :
             let type = message.type;
-            console.log(`[message type] => ${type}`);
+            //console.log(`[message type] => ${type}`);
 
             let id = message.id;
             
@@ -62,6 +62,14 @@ app.post('/webhook', (req,res) => {
                 let text = message.text;
 
                 console.log(`received text : ${text}`);
+
+                conn.connect((err) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log('connect database success!');
+                    }
+                })
 
                 let query = conn.query(`select * from reply`,(err, result) => {
                     if (err) {
