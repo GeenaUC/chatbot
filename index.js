@@ -8,27 +8,31 @@ const client = new line.Client({
     channelAccessToken: '4bpYw3g3xJCxM1aURCIilx/NGBcInRFHjUhFXZy3Jl4KvnRrpZkUoJgwc4kAjuyCrcWhFHyKdHbMAbWHh4OYKU1C5l5ty00VxKtEzwpIp1/16i1RDwXD5WFdvd5wKWEV7JASy9HScLtLbqRTGob2NwdB04t89/1O/w1cDnyilFU='
 });
 
-const mysql = require('mysql');
-const conn = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password : '',
-    database : 'chatbot'
-})
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
 
-// conn.connect((err) => {
-//     if (err) {
-//         console.log(err);
-//     } else {
-//         console.log('connect database success!');
-//     }
-// })
+const dbUrl = 'mongodb://user02:user02@ds157834.mlab.com:57834/smartqr';
+const dbName = 'smartqr';
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (req,res) => {
-    res.send('Hello');
+
+    MongoClient.connect(dbUrl, (err, client) => {
+        assert.equal(null, err);
+        var db = client.db(dbName);
+        const collection = db.collection('users');
+        collection.find({}).toArray((err, result) => {
+            if (err) throw err;
+            console.log("Connected successfully !");
+            console.log(result);
+        })
+       
+        client.close();
+      });
+
+      res.send({status: "ok"})
 })
 
 app.post('/webhook', (req,res) => {
@@ -52,85 +56,62 @@ app.post('/webhook', (req,res) => {
     //console.log(replyToken);
     console.log('----------------------');
 
-    conn.connect((err) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log('connect database success!');
-        }
-    })
+    switch (type) {
+        case 'message' :
+            let type = message.type;
+            //console.log(`[message type] => ${type}`);
 
-    let query = conn.query(`select * from reply`,(err, result) => {
-        if (err) {
-            console.log('error : ');
-            console.log(err);
-        };
-        console.log(`result ==>`);
-        console.log(result);
-    });
-
-    // switch (type) {
-    //     case 'message' :
-    //         let type = message.type;
-    //         //console.log(`[message type] => ${type}`);
-
-    //         let id = message.id;
+            let id = message.id;
             
-    //         if (type == 'text') {
-    //             let text = message.text;
+            if (type == 'text') {
+                let text = message.text;
 
-    //             console.log(`received text : ${text}`);
+                console.log(`received text : ${text}`);
 
-    //             // conn.connect((err) => {
-    //             //     if (err) {
-    //             //         console.log(err);
-    //             //     } else {
-    //             //         console.log('connect database success!');
-    //             //     }
-    //             // })
+                MongoClient.connect(dbUrl, (err, client) => {
+                    assert.equal(null, err);
+                    var db = client.db(dbName);
+                    const collection = db.collection('users');
+                    collection.find({}).toArray((err, result) => {
+                        if (err) throw err;
+                        console.log("Connected successfully !");
+                        console.log(result);
+                    })
+                   
+                    client.close();
+                  });
 
-    //             // let query = conn.query(`select * from reply`,(err, result) => {
-    //             //     if (err) {
-    //             //         console.log('error : ');
-    //             //         console.log(err);
-    //             //     };
-    //             //     console.log(`result ==>`);
-    //             //     console.log(result);
-    //             // });
+                // const messageResponse = [
+                //     {
+                //         type: 'text',
+                //         text: 'แบร่ แบร่'
+                //     },
+                //     {
+                //         type: "sticker",
+                //         packageId: "11537",
+                //         stickerId: "52002758"
+                //     }
+                // ];
 
-    //             //console.log(query.sql);
-
-    //             // const messageResponse = [
-    //             //     {
-    //             //         type: 'text',
-    //             //         text: 'แบร่ แบร่'
-    //             //     },
-    //             //     {
-    //             //         type: "sticker",
-    //             //         packageId: "11537",
-    //             //         stickerId: "52002758"
-    //             //     }
-    //             // ];
-
-    //             //replyMessage(replyToken, messageResponse);
+                //replyMessage(replyToken, messageResponse);
                 
-    //         } else if (type == 'sticker') {
-    //             let stickerID = message.stickerId;
-    //             let packageID = message.packageId;
-    //         }
+            } else if (type == 'sticker') {
+                let stickerID = message.stickerId;
+                let packageID = message.packageId;
+            }
 
-    //         break;
-    //     case 'follow' :
-    //         break;
-    //     case '่join' :
-    //         break;
-    //     case 'follow' :
-    //         break;
-    //     case 'unfollow' :
-    //         break;
-    //     default:
-    //         break;
-    // }
+            break;
+        case 'follow' :
+            break;
+        case '่join' :
+            break;
+        case 'follow' :
+            break;
+        case 'unfollow' :
+            break;
+        default:
+            break;
+    }
 
     let respone = {
         status: 'ok',
