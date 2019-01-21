@@ -77,9 +77,7 @@ app.post('/webhook', (req,res) => {
                 //     }
                 // ];
 
-
-
-                replyMessage(replyToken, messageResponse);
+                //replyMessage(replyToken, messageResponse);
                 
             } else if (type == 'sticker') {
                 let stickerID = message.stickerId;
