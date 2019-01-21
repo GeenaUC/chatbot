@@ -92,7 +92,7 @@ app.post('/webhook', (req,res) => {
                         switch (action) {
                             case 'age' :
                                 types = "text";
-                                texts = results;
+                                texts = '25';
                                 break;
                             default:
                                 break;
