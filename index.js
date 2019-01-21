@@ -38,7 +38,7 @@ app.post('/webhook', (req,res) => {
     switch (type) {
         case 'message' :
             let type = message.type;
-            console.log(`[message type] : ${type}`);
+            console.log(`[message type] => ${type}`);
 
             let id = message.id;
             
@@ -57,7 +57,7 @@ app.post('/webhook', (req,res) => {
                     }
                 ];
 
-                  replyMessage(replyToken, message);
+                  replyMessage(replyToken, text);
                 
             } else if (type == 'sticker') {
                 let stickerID = message.stickerId;
