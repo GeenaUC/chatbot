@@ -89,7 +89,7 @@ app.post('/webhook', (req,res) => {
                         console.log(result);
                     })
                    
-                    client.close();
+                    //client.close();
                   });
 
                 let item = text.split(' ');
