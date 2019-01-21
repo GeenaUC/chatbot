@@ -71,6 +71,9 @@ app.post('/webhook', (req,res) => {
                 let action = item[0];
                 let name = item[1];
 
+                let types;
+                let texts;
+
                 switch (name) {
                     case 'Gna' :
                         let results;
@@ -80,38 +83,42 @@ app.post('/webhook', (req,res) => {
                             const collection = db.collection('users');
                             collection.find({name : 'Gna'}).toArray((err, result) => {
                                 if (err) throw err;
-                                console.log(result[0].age);
+                                console.log(result);
                                 results = result;
                             })
                         });
 
-                        // switch (action) {
-                        //     case 'age' :
-                        //         let type = "text";
-                        //         let text = results;
-                        //         break;
-                        //     default:
-                        //         break;
-                        // }
+                        switch (action) {
+                            case 'age' :
+                                types = "text";
+                                texts = results[0].age;
+                                break;
+                            case 'fb' :
+                                types = "text";
+                                texts = results[0].facebook;
+                                break;
+                            default:
+                                break;
+                        }
 
                         break;
                     default:
                         break;
                 }
 
-                // const messageResponse = [
-                //     {
-                //         type: 'text',
-                //         text: 'แบร่ แบร่'
-                //     },
-                //     {
-                //         type: "sticker",
-                //         packageId: "11537",
-                //         stickerId: "52002758"
-                //     }
-                // ];
+                const messageResponse = [
+                    {
+                        type: texts,
+                        text: texts
+                    }
+                    // {
+                    //     type: "sticker",
+                    //     packageId: "11537",
+                    //     stickerId: "52002758"
+                    // }
+                ];
 
-                //replyMessage(replyToken, messageResponse);
+                replyMessage(replyToken, messageResponse);
                 
             } else if (type == 'sticker') {
                 let stickerID = message.stickerId;
