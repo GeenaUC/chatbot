@@ -45,26 +45,24 @@ app.post('/webhook', (req,res) => {
             if (type == 'text') {
                 let text = message.text;
 
-                const message = [
+                const messageResponse = [
                     {
                         type: 'text',
                         text: 'แบร่ แบร่'
                     },
                     {
                         type: "sticker",
-                        packageId: "52002758",
-                        stickerId: "11537"
+                        packageId: "1",
+                        stickerId: "1"
                     }
                 ];
 
-                  replyMessage(replyToken, text);
+                  replyMessage(replyToken, messageResponse);
                 
             } else if (type == 'sticker') {
                 let stickerID = message.stickerId;
                 let packageID = message.packageId;
             }
-            console.log(`[message id] : ${type}`);
-            console.log(`[message text] : ${type}`);
 
             break;
         case 'follow' :
