@@ -81,8 +81,23 @@ app.post('/webhook', (req,res) => {
                     client.close();
                   });
 
-                let name = text.split(' ');
-                console.log(name[0]);
+                let item = text.split(' ');
+                console.log(item[0]);
+
+                let action = item[0];
+                let name = item[1];
+
+                switch (name) {
+                    case 'Gna' :
+                        collection.find({name : 'Gna'}).toArray((err, result) => {
+                            if (err) throw err;
+                            console.log("Connected successfully !");
+                            console.log(result);
+                        })
+                        break;
+                    default:
+                        break;
+                }
 
                 // const messageResponse = [
                 //     {
