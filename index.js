@@ -84,14 +84,14 @@ app.post('/webhook', (req,res) => {
                             collection.find({name : 'Gna'}).toArray((err, result) => {
                                 if (err) throw err;
                                 console.log(result);
-                                results = result;
+                                results = result[0].age;
                             })
                         });
 
                         switch (action) {
                             case 'age' :
                                 types = "text";
-                                texts = results[0].age;
+                                texts = results;
                                 break;
                             default:
                                 break;
