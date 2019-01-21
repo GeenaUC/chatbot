@@ -82,7 +82,6 @@ app.post('/webhook', (req,res) => {
                   });
 
                 let item = text.split(' ');
-                console.log(item[0]);
 
                 let action = item[0];
                 let name = item[1];
@@ -91,7 +90,6 @@ app.post('/webhook', (req,res) => {
                     case 'Gna' :
                         collection.find({name : 'Gna'}).toArray((err, result) => {
                             if (err) throw err;
-                            console.log("Connected successfully !");
                             console.log(result);
                         })
                         break;
