@@ -44,53 +44,27 @@ app.post('/webhook', (req,res) => {
     let type = events.type;
     let replyToken = events.replyToken;
 
-    console.log('Body ==>');
-    console.log(body);
-    console.log(`Source ==>`);
-    console.log(source);
-    console.log(`Message ==>`);
-    console.log(message);
-    console.log(`type ==> ${type}`);
-    //console.log(type);
-    console.log(`replyToken ==> ${replyToken}`);
-    //console.log(replyToken);
-    console.log('----------------------');
-
-    MongoClient.connect(dbUrl, (err, client) => {
-        assert.equal(null, err);
-        var db = client.db(dbName);
-        const collection = db.collection('users');
-        collection.find({}).toArray((err, result) => {
-            if (err) throw err;
-            console.log("Connected successfully !");
-            console.log(result);
-        })
-      });
+    // console.log('Body ==>');
+    // console.log(body);
+    // console.log(`Source ==>`);
+    // console.log(source);
+    // console.log(`Message ==>`);
+    // console.log(message);
+    // console.log(`type ==> ${type}`);
+    // //console.log(type);
+    // console.log(`replyToken ==> ${replyToken}`);
+    // //console.log(replyToken);
+    // console.log('----------------------');
 
     switch (type) {
         case 'message' :
             let type = message.type;
-            //console.log(`[message type] => ${type}`);
-
-            let id = message.id;
+            //let id = message.id;
             
             if (type == 'text') {
                 let text = message.text;
 
                 console.log(`received text : ${text}`);
-
-                MongoClient.connect(dbUrl, (err, client) => {
-                    assert.equal(null, err);
-                    var db = client.db(dbName);
-                    const collection = db.collection('users');
-                    collection.find({}).toArray((err, result) => {
-                        if (err) throw err;
-                        console.log("Connected successfully !");
-                        console.log(result);
-                    })
-                   
-                    //client.close();
-                  });
 
                 let item = text.split(' ');
 
@@ -99,10 +73,16 @@ app.post('/webhook', (req,res) => {
 
                 switch (name) {
                     case 'Gna' :
-                        collection.find({name : 'Gna'}).toArray((err, result) => {
-                            if (err) throw err;
-                            console.log(result);
-                        })
+                        MongoClient.connect(dbUrl, (err, client) => {
+                            assert.equal(null, err);
+                            var db = client.db(dbName);
+                            const collection = db.collection('users');
+                            collection.find({name : 'Gna'}).toArray((err, result) => {
+                                if (err) throw err;
+                                console.log(result);
+                            })
+                        });
+
                         break;
                     default:
                         break;
