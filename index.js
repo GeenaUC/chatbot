@@ -19,18 +19,18 @@ app.use(bodyParser.json());
 
 app.get('/', (req,res) => {
 
-    MongoClient.connect(dbUrl, (err, client) => {
-        assert.equal(null, err);
-        var db = client.db(dbName);
-        const collection = db.collection('users');
-        collection.find({}).toArray((err, result) => {
-            if (err) throw err;
-            console.log("Connected successfully !");
-            console.log(result);
-        })
+    // MongoClient.connect(dbUrl, (err, client) => {
+    //     assert.equal(null, err);
+    //     var db = client.db(dbName);
+    //     const collection = db.collection('users');
+    //     collection.find({}).toArray((err, result) => {
+    //         if (err) throw err;
+    //         console.log("Connected successfully !");
+    //         console.log(result);
+    //     })
        
-        client.close();
-      });
+    //     client.close();
+    //   });
 
       res.send({status: "ok"})
 })
@@ -55,6 +55,17 @@ app.post('/webhook', (req,res) => {
     console.log(`replyToken ==> ${replyToken}`);
     //console.log(replyToken);
     console.log('----------------------');
+
+    MongoClient.connect(dbUrl, (err, client) => {
+        assert.equal(null, err);
+        var db = client.db(dbName);
+        const collection = db.collection('users');
+        collection.find({}).toArray((err, result) => {
+            if (err) throw err;
+            console.log("Connected successfully !");
+            console.log(result);
+        })
+      });
 
     switch (type) {
         case 'message' :
