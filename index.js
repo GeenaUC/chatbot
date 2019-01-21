@@ -36,7 +36,7 @@ app.get('/', (req,res) => {
 })
 
 app.post('/webhook', (req,res) => {
-    console.log('------ /webhook ------');
+    //console.log('------ /webhook ------');
     let body = req.body;
     let events = body.events[0];
     let source = events.source;
@@ -56,10 +56,29 @@ app.post('/webhook', (req,res) => {
     // //console.log(replyToken);
     // console.log('----------------------');
 
+    MongoClient.connect(dbUrl, (err, client) => {
+        assert.equal(null, err);
+        var db = client.db(dbName);
+        const collection = db.collection('users');
+        collection.find({}).toArray((err, result) => {
+            if (err) throw err;
+            console.log('---------------------Data---------------------');
+            console.log(result);
+            console.log('----------------------------------------------');
+        })
+    });
+
     switch (type) {
         case 'message' :
             let type = message.type;
             //let id = message.id;
+
+            collection.find({}).toArray((err, result) => {
+                if (err) throw err;
+                console.log('--------------------Data 2--------------------');
+                console.log(result);
+                console.log('----------------------------------------------');
+            })
             
             if (type == 'text') {
                 let text = message.text;
@@ -76,23 +95,11 @@ app.post('/webhook', (req,res) => {
 
                 switch (name) {
                     case 'Gna' :
-                        let results;
-                        MongoClient.connect(dbUrl, (err, client) => {
-                            assert.equal(null, err);
-                            var db = client.db(dbName);
-                            const collection = db.collection('users');
-                            collection.find({name : 'Gna'}).toArray((err, result) => {
-                                if (err) throw err;
-                                console.log(result);
-                                results = result[0].age;
-                                console.log(results);
-                            })
-                        });
-
                         switch (action) {
                             case 'age' :
+                                
                                 types = "text";
-                                texts = '25';
+                                texts = results;
                                 break;
                             default:
                                 break;
@@ -136,8 +143,7 @@ app.post('/webhook', (req,res) => {
     }
 
     let respone = {
-        status: 'ok',
-        body: body
+        status: 'ok'
     };
 
     res.send(respone);
@@ -146,7 +152,7 @@ app.post('/webhook', (req,res) => {
 // Method reply message
 const replyMessage = (replyToken, message) => {
     console.log('==> [replyMessage]');
-    console.log(`replayToken: ${replyToken}`);
+    //console.log(`replayToken: ${replyToken}`);
     console.log(`message: `);
     console.log(message);
 
