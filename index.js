@@ -72,7 +72,7 @@ app.post('/webhook', (req,res) => {
                 //     console.log(result);
                 // });
 
-                console.log(query.sql);
+                //console.log(query.sql);
 
                 // const messageResponse = [
                 //     {
