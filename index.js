@@ -73,15 +73,26 @@ app.post('/webhook', (req,res) => {
 
                 switch (name) {
                     case 'Gna' :
+                        let results;
                         MongoClient.connect(dbUrl, (err, client) => {
                             assert.equal(null, err);
                             var db = client.db(dbName);
                             const collection = db.collection('users');
                             collection.find({name : 'Gna'}).toArray((err, result) => {
                                 if (err) throw err;
-                                console.log(result);
+                                console.log(result[0].age);
+                                results = result;
                             })
                         });
+
+                        // switch (action) {
+                        //     case 'age' :
+                        //         let type = "text";
+                        //         let text = results;
+                        //         break;
+                        //     default:
+                        //         break;
+                        // }
 
                         break;
                     default:
