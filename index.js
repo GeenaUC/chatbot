@@ -89,14 +89,14 @@ app.post('/webhook', (req,res) => {
                                         if (err) throw err;
                                         //console.log('---------------------Data---------------------');
                                         console.log(result);
-                                        results = result[0];
+                                        results = result[0].age;
                                         console.log(results);
                                         console.log('----------------------------------------------');
                                     })
                                 });
 
                                 types = "text";
-                                texts = results.age;
+                                texts = results;
 
                                 break;
                             default:
