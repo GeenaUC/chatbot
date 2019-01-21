@@ -55,18 +55,22 @@ app.post('/webhook', (req,res) => {
 
                 console.log(`received text : ${text}`);
 
-                // conn.connect((err) => {
-                //     if (err) throw err;
-                // })
-
-                let query = conn.query(`select * from reply`,(err, result) => {
+                conn.connect((err) => {
                     if (err) {
-                        console.log('error : ');
                         console.log(err);
-                    };
-                    console.log(`result ==>`);
-                    console.log(result);
-                });
+                    }else {
+                        console.log('connect success!');
+                    }
+                })
+
+                // let query = conn.query(`select * from reply`,(err, result) => {
+                //     if (err) {
+                //         console.log('error : ');
+                //         console.log(err);
+                //     };
+                //     console.log(`result ==>`);
+                //     console.log(result);
+                // });
 
                 console.log(query.sql);
 
