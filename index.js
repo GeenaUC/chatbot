@@ -16,6 +16,14 @@ const conn = mysql.createConnection({
     database : 'chatbot'
 })
 
+conn.connect((err) => {
+    if (err) {
+        console.log(err);
+    } else {
+        console.log('connect database success!');
+    }
+})
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -55,22 +63,14 @@ app.post('/webhook', (req,res) => {
 
                 console.log(`received text : ${text}`);
 
-                conn.connect((err) => {
+                let query = conn.query(`select * from reply`,(err, result) => {
                     if (err) {
+                        console.log('error : ');
                         console.log(err);
-                    }else {
-                        console.log('connect success!');
-                    }
-                })
-
-                // let query = conn.query(`select * from reply`,(err, result) => {
-                //     if (err) {
-                //         console.log('error : ');
-                //         console.log(err);
-                //     };
-                //     console.log(`result ==>`);
-                //     console.log(result);
-                // });
+                    };
+                    console.log(`result ==>`);
+                    console.log(result);
+                });
 
                 //console.log(query.sql);
 
