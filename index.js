@@ -97,7 +97,7 @@ app.post('/webhook', (req,res) => {
                                             texts : results
                                         }];
     
-                                        //replyMessage(replyToken, messageResponse);
+                                        replyMessage(replyToken, messageResponse);
                                     })
                                 });
 
