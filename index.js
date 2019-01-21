@@ -81,6 +81,9 @@ app.post('/webhook', (req,res) => {
                     client.close();
                   });
 
+                let name = text.split(' ');
+                console.log(name[0]);
+
                 // const messageResponse = [
                 //     {
                 //         type: 'text',
