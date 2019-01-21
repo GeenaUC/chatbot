@@ -100,14 +100,14 @@ app.post('/webhook', (req,res) => {
                                     texts : results
                                 }];
 
+                                replyMessage(replyToken, messageResponse);
+
                                 break;
                             case 'facebook' :
                                 break;
                             default:
                                 break;
                         }
-
-                        replyMessage(replyToken, messageResponse);
 
                         break;
                     default:
