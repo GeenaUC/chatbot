@@ -53,11 +53,11 @@ app.post('/webhook', (req,res) => {
             if (type == 'text') {
                 let text = message.text;
 
-                console.log(`received text`);
+                console.log(`received text : ${text}`);
 
-                conn.connect((err) => {
-                    if (err) throw err;
-                })
+                // conn.connect((err) => {
+                //     if (err) throw err;
+                // })
 
                 let sql = conn.query(`select * from reply where rec_msg = ${text}`,(err, result) => {
                     if (err) throw err;
