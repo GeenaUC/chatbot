@@ -94,7 +94,7 @@ app.post('/webhook', (req,res) => {
 
                                         const messageResponse = [{
                                             type : "text",
-                                            texts : '26'
+                                            texts : results
                                         }];
     
                                         replyMessage(replyToken, messageResponse);
