@@ -80,7 +80,6 @@ app.post('/webhook', (req,res) => {
                             case 'age' :
 
                                 let results;
-                                let replys = [];
 
                                 MongoClient.connect(dbUrl, (err, client) => {
                                     assert.equal(null, err);
@@ -93,13 +92,6 @@ app.post('/webhook', (req,res) => {
                                         results = result[0].age;
                                         console.log('----------------------------------------------');
 
-                                        const messageResponse = [{
-                                            type : "text",
-                                            texts : results
-                                        }];
-
-                                        replys = messageResponse;
-
                                     })
                                 });
 
@@ -108,10 +100,16 @@ app.post('/webhook', (req,res) => {
                                     texts : results
                                 }];
 
-                                replyMessage(replyToken, replys);
+                                replyMessage(replyToken, messageResponse);
 
                                 break;
                             case 'facebook' :
+                                const messageResponse2 = [{
+                                    type : "text",
+                                    texts : 'Ganee Geena'
+                                }];
+
+                                replyMessage(replyToken, messageResponse2);
                                 break;
                             default:
                                 break;
