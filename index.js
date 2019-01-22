@@ -162,7 +162,7 @@ app.post('/webhook', (req,res) => {
 // Method reply message
 const replyMessage = (replyToken, message) => {
     console.log('==> [replyMessage]');
-    //console.log(`replayToken: ${replyToken}`);
+    console.log(`replayToken: ${replyToken}`);
     console.log(`message : `);
     console.log(message);
 
