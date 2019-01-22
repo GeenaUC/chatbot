@@ -83,7 +83,7 @@ app.post('/webhook', (req,res) => {
                             var db = client.db(dbName);
                             const collection = db.collection('users');
                             collection.find({ name : names }).toArray((err, result) => {
-                                if (err) throw err;
+                                //if (err) throw err;
 
                                 if (!result) {
                                     console.log(err);
@@ -93,7 +93,7 @@ app.post('/webhook', (req,res) => {
                                         text: 'ใครหว่า ไม่รู้จักง่า'
                                     }];
                                     replyMessage(replyToken, messageResponse);
-                                    
+
                                 } else {
                                     console.log(result);
                                     results = result[0].age;
