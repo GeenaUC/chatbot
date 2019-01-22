@@ -50,15 +50,15 @@ app.post('/webhook', (req,res) => {
 
     console.log('Body ==>');
     console.log(body);
-    // console.log(`Source ==>`);
-    // console.log(source);
-    // console.log(`Message ==>`);
-    // console.log(message);
-    // console.log(`type ==> ${type}`);
-    // //console.log(type);
-    // console.log(`replyToken ==> ${replyToken}`);
-    // //console.log(replyToken);
-    // console.log('----------------------------------------');
+    console.log(`Source ==>`);
+    console.log(source);
+    console.log(`Message ==>`);
+    console.log(message);
+    console.log(`type ==> ${type}`);
+    //console.log(type);
+    console.log(`replyToken ==> ${replyToken}`);
+    //console.log(replyToken);
+    console.log('----------------------------------------');
 
     switch (type) {
         case 'message' :
@@ -114,7 +114,7 @@ app.post('/webhook', (req,res) => {
 
                                     const messageResponse = [{
                                         type: 'text',
-                                        text: results + 'ขวบจ้า'
+                                        text: results + ' ขวบจ้า'
                                     }];
                                     replyMessage(replyToken, messageResponse);
                                 }
@@ -123,7 +123,45 @@ app.post('/webhook', (req,res) => {
 
                         break;
                     case 'facebook':
-                        
+                        MongoClient.connect(dbUrl, (err, client) => {
+                            assert.equal(null, err);
+                            var db = client.db(dbName);
+                            const collection = db.collection('users');
+                            collection.find({ name : names }).toArray((err, result) => {
+                                if (err) {
+                                    console.log(err);
+                                    client.close();
+                                }
+
+                                if (result == '') {
+
+                                    const messageResponse = [
+                                        {
+                                            type: 'text',
+                                            text: 'ใครหว่า ไม่รู้จักง่า'
+                                        },
+                                        {
+                                            type: "sticker",
+                                            packageId: "11537",
+                                            stickerId: "52002758"
+                                        }
+                                    ];
+                                    replyMessage(replyToken, messageResponse);
+
+                                } else {
+                                    console.log(result);
+                                    results = result[0].facebook;
+                                    console.log('------------------------------------------------------');
+
+                                    const messageResponse = [{
+                                        type: 'text',
+                                        text: 'นี่เลยย ' + results
+                                    }];
+                                    replyMessage(replyToken, messageResponse);
+                            }
+                        });
+                    });    
+
                         break;
                     default:
                         break;
