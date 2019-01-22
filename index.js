@@ -81,23 +81,23 @@ app.post('/webhook', (req,res) => {
 
                                 let results;
 
-                                // MongoClient.connect(dbUrl, (err, client) => {
-                                //     assert.equal(null, err);
-                                //     var db = client.db(dbName);
-                                //     const collection = db.collection('users');
-                                //     collection.find({ name : 'Gna' }).toArray((err, result) => {
-                                //         if (err) throw err;
-                                //         //console.log('---------------------Data---------------------');
-                                //         console.log(result);
-                                //         results = result[0].age;
-                                //         console.log('------------------------------------------------------');
+                                MongoClient.connect(dbUrl, (err, client) => {
+                                    assert.equal(null, err);
+                                    var db = client.db(dbName);
+                                    const collection = db.collection('users');
+                                    collection.find({ name : 'Gna' }).toArray((err, result) => {
+                                        if (err) throw err;
+                                        //console.log('---------------------Data---------------------');
+                                        console.log(result);
+                                        results = result[0].age;
+                                        console.log('------------------------------------------------------');
 
-                                //     })
-                                // });
+                                    })
+                                });
 
                                 const messageResponse = [{
                                     type : "text",
-                                    texts : '19'
+                                    text : '19'
                                 }];
 
                                 replyMessage(replyToken, messageResponse);
@@ -106,7 +106,7 @@ app.post('/webhook', (req,res) => {
                             case 'facebook' :
                                 const messageResponse2 = [{
                                     type : "text",
-                                    texts : 'Ganee Geena'
+                                    text : 'Ganee Geena'
                                 }];
 
                                 replyMessage(replyToken, messageResponse2);
