@@ -232,6 +232,12 @@ app.post('/webhook', (req,res) => {
                         break;
                     
                     default:
+                        const messageResponse = [{
+                            type: "sticker",
+                                packageId: "11538",
+                                stickerId: "51626530"
+                        }];
+                        replyMessage(replyToken, messageResponse);
                         break;
                 }
 
