@@ -102,7 +102,7 @@ app.post('/webhook', (req,res) => {
                                         {
                                             type: "sticker",
                                             packageId: "11537",
-                                            stickerId: "52002758"
+                                            stickerId: "52002744"
                                         }
                                     ];
                                     replyMessage(replyToken, messageResponse);
@@ -143,7 +143,7 @@ app.post('/webhook', (req,res) => {
                                         {
                                             type: "sticker",
                                             packageId: "11537",
-                                            stickerId: "52002758"
+                                            stickerId: "52002744"
                                         }
                                     ];
                                     replyMessage(replyToken, messageResponse);
@@ -158,11 +158,60 @@ app.post('/webhook', (req,res) => {
                                         text: 'นี่เลยย ' + results
                                     }];
                                     replyMessage(replyToken, messageResponse);
-                            }
-                        });
-                    });    
+                                }
+                            });
+                        });    
 
                         break;
+                    case 'image':
+                        MongoClient.connect(dbUrl, (err, client) => {
+                            assert.equal(null, err);
+                            var db = client.db(dbName);
+                            const collection = db.collection('users');
+                            collection.find({ name : names }).toArray((err, result) => {
+                                if (err) {
+                                    console.log(err);
+                                    client.close();
+                                }
+
+                                if (result == '') {
+
+                                    const messageResponse = [
+                                        {
+                                            type: 'text',
+                                            text: 'ใครหว่า ไม่รู้จักง่า'
+                                        },
+                                        {
+                                            type: "sticker",
+                                            packageId: "11537",
+                                            stickerId: "52002744"
+                                        }
+                                    ];
+                                    replyMessage(replyToken, messageResponse);
+
+                                } else {
+                                    console.log(result);
+                                    results = result[0].imgUrl;
+                                    console.log('------------------------------------------------------');
+
+                                    const messageResponse = [
+                                        {
+                                            type: "text",
+                                            text: "แล้วจะอึ้ง"
+                                        },
+                                        {
+                                            type: "image",
+                                            originalContentUrl: results,
+                                            previewImageUrl: results
+                                        }
+                                    ];
+                                    replyMessage(replyToken, messageResponse);
+                                }
+                            });
+                        });    
+
+                        break;
+                    
                     default:
                         break;
                 }
