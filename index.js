@@ -74,6 +74,8 @@ app.post('/webhook', (req,res) => {
                 // let types;
                 // let texts;
 
+                let results;
+
                 switch (action) {
                     case 'age' :
                         MongoClient.connect(dbUrl, (err, client) => {
@@ -86,9 +88,16 @@ app.post('/webhook', (req,res) => {
                                 console.log(result);
                                 results = result[0].age;
                                 console.log('------------------------------------------------------');
+
+                                const messageResponse = [{
+                                    type: 'text',
+                                    text: results
+                                }];
+
+                                replyMessage(replyToken, messageResponse);
                             });
                         });
-                        
+
                         break;
                     default:
                         break;
