@@ -48,8 +48,8 @@ app.post('/webhook', (req,res) => {
     let type = events.type;
     let replyToken = events.replyToken;
 
-    // console.log('Body ==>');
-    // console.log(body);
+    console.log('Body ==>');
+    console.log(body);
     // console.log(`Source ==>`);
     // console.log(source);
     // console.log(`Message ==>`);
@@ -94,10 +94,17 @@ app.post('/webhook', (req,res) => {
 
                                 if (result == '') {
 
-                                    const messageResponse = [{
-                                        type: 'text',
-                                        text: 'ใครหว่า ไม่รู้จักง่า'
-                                    }];
+                                    const messageResponse = [
+                                        {
+                                            type: 'text',
+                                            text: 'ใครหว่า ไม่รู้จักง่า'
+                                        },
+                                        {
+                                            type: "sticker",
+                                            packageId: "11537",
+                                            stickerId: "52002758"
+                                        }
+                                    ];
                                     replyMessage(replyToken, messageResponse);
 
                                 } else {
@@ -107,7 +114,7 @@ app.post('/webhook', (req,res) => {
 
                                     const messageResponse = [{
                                         type: 'text',
-                                        text: results
+                                        text: results + 'ขวบจ้า'
                                     }];
                                     replyMessage(replyToken, messageResponse);
                                 }
