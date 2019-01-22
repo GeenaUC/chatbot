@@ -24,7 +24,11 @@ app.get('/', (req,res) => {
         var db = client.db(dbName);
         const collection = db.collection('users');
         collection.find({}).toArray((err, result) => {
-            if (err) throw err;
+            //if (err) throw err;
+
+            if (result == '') {
+                console.log('not found');
+            }
             console.log("Connected successfully !");
             console.log(result);
         })
@@ -83,10 +87,12 @@ app.post('/webhook', (req,res) => {
                             var db = client.db(dbName);
                             const collection = db.collection('users');
                             collection.find({ name : names }).toArray((err, result) => {
-                                //if (err) throw err;
-
-                                if (!result) {
+                                if (err) {
                                     console.log(err);
+                                    client.close();
+                                }
+
+                                if (result == '') {
 
                                     const messageResponse = [{
                                         type: 'text',
@@ -108,6 +114,9 @@ app.post('/webhook', (req,res) => {
                             });
                         });
 
+                        break;
+                    case 'facebook':
+                        
                         break;
                     default:
                         break;
