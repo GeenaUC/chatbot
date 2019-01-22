@@ -86,7 +86,11 @@ app.post('/webhook', (req,res) => {
                                 console.log(result);
                                 results = result[0].age;
                                 console.log('------------------------------------------------------');
-
+                            });
+                        });
+                        
+                        break;
+                    default:
                         break;
                 }
 
