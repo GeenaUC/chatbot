@@ -69,56 +69,72 @@ app.post('/webhook', (req,res) => {
                 let item = text.split(' ');
 
                 let action = item[0];
-                let name = item[1];
+                let names = item[1];
 
-                let types;
-                let texts;
+                // let types;
+                // let texts;
 
-                switch (name) {
-                    case 'Gna' :
-                        switch (action) {
-                            case 'age' :
+                switch (action) {
+                    case 'age' :
+                        MongoClient.connect(dbUrl, (err, client) => {
+                            assert.equal(null, err);
+                            var db = client.db(dbName);
+                            const collection = db.collection('users');
+                            collection.find({ name : names }).toArray((err, result) => {
+                                if (err) throw err;
+                                //console.log('---------------------Data---------------------');
+                                console.log(result);
+                                results = result[0].age;
+                                console.log('------------------------------------------------------');
 
-                                let results;
-
-                                MongoClient.connect(dbUrl, (err, client) => {
-                                    assert.equal(null, err);
-                                    var db = client.db(dbName);
-                                    const collection = db.collection('users');
-                                    collection.find({ name : 'Gna' }).toArray((err, result) => {
-                                        if (err) throw err;
-                                        //console.log('---------------------Data---------------------');
-                                        console.log(result);
-                                        results = result[0].age;
-                                        console.log('------------------------------------------------------');
-
-                                        const messageResponse = [{
-                                            type : "text",
-                                            text : results
-                                        }];
-
-                                        replyMessage(replyToken, messageResponse);
-
-                                    })
-                                });
-
-                                break;
-                            case 'facebook' :
-                                const messageResponse2 = [{
-                                    type : "text",
-                                    text : 'Ganee Geena'
-                                }];
-
-                                replyMessage(replyToken, messageResponse2);
-                                break;
-                            default:
-                                break;
-                        }
-
-                        break;
-                    default:
                         break;
                 }
+
+                // switch (names) {
+                //     case 'Gna' :
+                //         switch (action) {
+                //             case 'age' :
+
+                //                 let results;
+
+                //                 MongoClient.connect(dbUrl, (err, client) => {
+                //                     assert.equal(null, err);
+                //                     var db = client.db(dbName);
+                //                     const collection = db.collection('users');
+                //                     collection.find({ name : names }).toArray((err, result) => {
+                //                         if (err) throw err;
+                //                         //console.log('---------------------Data---------------------');
+                //                         console.log(result);
+                //                         results = result[0].age;
+                //                         console.log('------------------------------------------------------');
+
+                //                         // const messageResponse = [{
+                //                         //     type : "text",
+                //                         //     text : results
+                //                         // }];
+
+                //                         // replyMessage(replyToken, messageResponse);
+
+                //                     })
+                //                 });
+
+                //                 break;
+                //             case 'facebook' :
+                //                 const messageResponse2 = [{
+                //                     type : "text",
+                //                     text : 'Ganee Geena'
+                //                 }];
+
+                //                 replyMessage(replyToken, messageResponse2);
+                //                 break;
+                //             default:
+                //                 break;
+                //         }
+
+                //         break;
+                //     default:
+                //         break;
+                // }
 
                 // const messageResponse = [
                 //     {
