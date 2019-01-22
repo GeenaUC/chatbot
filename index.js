@@ -44,17 +44,17 @@ app.post('/webhook', (req,res) => {
     let type = events.type;
     let replyToken = events.replyToken;
 
-    console.log('Body ==>');
-    console.log(body);
-    console.log(`Source ==>`);
-    console.log(source);
-    console.log(`Message ==>`);
-    console.log(message);
-    console.log(`type ==> ${type}`);
-    //console.log(type);
-    console.log(`replyToken ==> ${replyToken}`);
-    //console.log(replyToken);
-    console.log('----------------------------------------');
+    // console.log('Body ==>');
+    // console.log(body);
+    // console.log(`Source ==>`);
+    // console.log(source);
+    // console.log(`Message ==>`);
+    // console.log(message);
+    // console.log(`type ==> ${type}`);
+    // //console.log(type);
+    // console.log(`replyToken ==> ${replyToken}`);
+    // //console.log(replyToken);
+    // console.log('----------------------------------------');
 
     switch (type) {
         case 'message' :
@@ -84,17 +84,27 @@ app.post('/webhook', (req,res) => {
                             const collection = db.collection('users');
                             collection.find({ name : names }).toArray((err, result) => {
                                 if (err) throw err;
-                                //console.log('---------------------Data---------------------');
-                                console.log(result);
-                                results = result[0].age;
-                                console.log('------------------------------------------------------');
 
-                                const messageResponse = [{
-                                    type: 'text',
-                                    text: results
-                                }];
+                                if (!result) {
+                                    console.log(err);
 
-                                replyMessage(replyToken, messageResponse);
+                                    const messageResponse = [{
+                                        type: 'text',
+                                        text: 'ใครหว่า ไม่รู้จักง่า'
+                                    }];
+                                    replyMessage(replyToken, messageResponse);
+                                    
+                                } else {
+                                    console.log(result);
+                                    results = result[0].age;
+                                    console.log('------------------------------------------------------');
+
+                                    const messageResponse = [{
+                                        type: 'text',
+                                        text: results
+                                    }];
+                                    replyMessage(replyToken, messageResponse);
+                                }
                             });
                         });
 
@@ -102,52 +112,6 @@ app.post('/webhook', (req,res) => {
                     default:
                         break;
                 }
-
-                // switch (names) {
-                //     case 'Gna' :
-                //         switch (action) {
-                //             case 'age' :
-
-                //                 let results;
-
-                //                 MongoClient.connect(dbUrl, (err, client) => {
-                //                     assert.equal(null, err);
-                //                     var db = client.db(dbName);
-                //                     const collection = db.collection('users');
-                //                     collection.find({ name : names }).toArray((err, result) => {
-                //                         if (err) throw err;
-                //                         //console.log('---------------------Data---------------------');
-                //                         console.log(result);
-                //                         results = result[0].age;
-                //                         console.log('------------------------------------------------------');
-
-                //                         // const messageResponse = [{
-                //                         //     type : "text",
-                //                         //     text : results
-                //                         // }];
-
-                //                         // replyMessage(replyToken, messageResponse);
-
-                //                     })
-                //                 });
-
-                //                 break;
-                //             case 'facebook' :
-                //                 const messageResponse2 = [{
-                //                     type : "text",
-                //                     text : 'Ganee Geena'
-                //                 }];
-
-                //                 replyMessage(replyToken, messageResponse2);
-                //                 break;
-                //             default:
-                //                 break;
-                //         }
-
-                //         break;
-                //     default:
-                //         break;
-                // }
 
                 // const messageResponse = [
                 //     {
