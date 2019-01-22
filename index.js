@@ -44,17 +44,17 @@ app.post('/webhook', (req,res) => {
     let type = events.type;
     let replyToken = events.replyToken;
 
-    // console.log('Body ==>');
-    // console.log(body);
-    // console.log(`Source ==>`);
-    // console.log(source);
-    // console.log(`Message ==>`);
-    // console.log(message);
-    // console.log(`type ==> ${type}`);
-    // //console.log(type);
-    // console.log(`replyToken ==> ${replyToken}`);
-    // //console.log(replyToken);
-    // console.log('----------------------');
+    console.log('Body ==>');
+    console.log(body);
+    console.log(`Source ==>`);
+    console.log(source);
+    console.log(`Message ==>`);
+    console.log(message);
+    console.log(`type ==> ${type}`);
+    //console.log(type);
+    console.log(`replyToken ==> ${replyToken}`);
+    //console.log(replyToken);
+    console.log('----------------------------------------');
 
     switch (type) {
         case 'message' :
@@ -81,23 +81,23 @@ app.post('/webhook', (req,res) => {
 
                                 let results;
 
-                                MongoClient.connect(dbUrl, (err, client) => {
-                                    assert.equal(null, err);
-                                    var db = client.db(dbName);
-                                    const collection = db.collection('users');
-                                    collection.find({ name : 'Gna' }).toArray((err, result) => {
-                                        if (err) throw err;
-                                        //console.log('---------------------Data---------------------');
-                                        console.log(result);
-                                        results = result[0].age;
-                                        console.log('----------------------------------------------');
+                                // MongoClient.connect(dbUrl, (err, client) => {
+                                //     assert.equal(null, err);
+                                //     var db = client.db(dbName);
+                                //     const collection = db.collection('users');
+                                //     collection.find({ name : 'Gna' }).toArray((err, result) => {
+                                //         if (err) throw err;
+                                //         //console.log('---------------------Data---------------------');
+                                //         console.log(result);
+                                //         results = result[0].age;
+                                //         console.log('------------------------------------------------------');
 
-                                    })
-                                });
+                                //     })
+                                // });
 
                                 const messageResponse = [{
                                     type : "text",
-                                    texts : results
+                                    texts : '19'
                                 }];
 
                                 replyMessage(replyToken, messageResponse);
@@ -163,7 +163,7 @@ app.post('/webhook', (req,res) => {
 const replyMessage = (replyToken, message) => {
     console.log('==> [replyMessage]');
     //console.log(`replayToken: ${replyToken}`);
-    console.log(`message: `);
+    console.log(`message : `);
     console.log(message);
 
     client.replyMessage(replyToken, message)
