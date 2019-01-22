@@ -92,15 +92,15 @@ app.post('/webhook', (req,res) => {
                                         results = result[0].age;
                                         console.log('------------------------------------------------------');
 
+                                        const messageResponse = [{
+                                            type : "text",
+                                            text : results
+                                        }];
+
+                                        replyMessage(replyToken, messageResponse);
+
                                     })
                                 });
-
-                                const messageResponse = [{
-                                    type : "text",
-                                    text : results
-                                }];
-
-                                replyMessage(replyToken, messageResponse);
 
                                 break;
                             case 'facebook' :
