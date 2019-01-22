@@ -68,6 +68,23 @@ app.post('/webhook', (req,res) => {
             if (type == 'text') {
                 let text = message.text;
 
+                if ((text == 'สวัสดี') || (text == 'สวัสดีค่ะ') || (text == 'สวัสดีครับ') ||
+                (text == 'สวัสดีจ้า') || (text == 'หวัดดี') || (text == 'หวัดดีค่ะ') || (text == 'หวัดดีครับ') ||
+                (text == 'หวัดดีจ้า')) {
+                    const messageResponse = [
+                        {
+                            type: 'text',
+                            text: 'สวัสดีฮ้าา'
+                        },
+                        {
+                            type: "sticker",
+                            packageId: "11537",
+                            stickerId: "52002738"
+                        }
+                    ];
+                    replyMessage(replyToken, messageResponse);
+                }
+
                 console.log(`received text : ${text}`);
 
                 let item = text.split(' ');
@@ -116,10 +133,6 @@ app.post('/webhook', (req,res) => {
                                         {
                                             type: 'text',
                                             text: results + ' ขวบจ้า'
-                                        },
-                                        {
-                                            type: 'text',
-                                            text: 'หน้าเด็กป้ะล่าาาา อิอิ'
                                         }
                                     ];
                                     replyMessage(replyToken, messageResponse);
@@ -203,7 +216,7 @@ app.post('/webhook', (req,res) => {
                                     const messageResponse = [
                                         {
                                             type: "text",
-                                            text: "แล้วจะอึ้ง"
+                                            text: "หน้าเด็กมากกก"
                                         },
                                         {
                                             type: "image",
