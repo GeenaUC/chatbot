@@ -112,10 +112,16 @@ app.post('/webhook', (req,res) => {
                                     results = result[0].age;
                                     console.log('------------------------------------------------------');
 
-                                    const messageResponse = [{
-                                        type: 'text',
-                                        text: results + ' ขวบจ้า'
-                                    }];
+                                    const messageResponse = [
+                                        {
+                                            type: 'text',
+                                            text: results + ' ขวบจ้า'
+                                        },
+                                        {
+                                            type: 'text',
+                                            text: 'หน้าเด็กป้ะล่าาาา อิอิ'
+                                        }
+                                    ];
                                     replyMessage(replyToken, messageResponse);
                                 }
                             });
